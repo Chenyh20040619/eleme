@@ -5,54 +5,54 @@
     <div class="icon-location-box">
       <div class="icon-location"></div>
     </div>
-    <div class="location-text">沈阳市规划大厦<i class="fa fa-caret-down"></i> </div>
+    <div class="location-text">呈贡区云南大学<i class="fa fa-caret-down"></i> </div>
   </header>
   <div class="search" id="fixedBox">
     <div class="search-fixed-top">
       <div class="search-box">
-        <input type="text" placeholder="搜索饿了么" style="width: 90%;height: 9vw;background:none;outline:none;border:0px;">
+        <input type="text" placeholder="搜索饿了么" style="width: 90%;height: 9vw;background:none;outline:none;border:0px;font-size: 3vw">
       </div>
     </div>
   </div>
     <ul class="foodtype">
       <li v-on:click="$router.push('/businessList')">
-        <img src="img/dcfl01.png">
+        <img src="../img/dcfl01.png">
         <p>美食</p>
       </li>
       <li v-on:click="$router.push('/businessList')">
-        <img src="img/dcfl02.png">
+        <img src="../img/dcfl02.png">
         <p>早餐</p>
       </li>
       <li v-on:click="$router.push('/businessList')">
-        <img src="img/dcfl03.png">
+        <img src="../img/dcfl03.png">
         <p>跑腿代购</p>
       </li>
       <li v-on:click="$router.push('/businessList')">
-        <img src="img/dcfl04.png">
+        <img src="../img/dcfl04.png">
         <p>汉堡披萨</p>
       </li>
       <li v-on:click="$router.push('/businessList')">
-        <img src="img/dcfl05.png">
+        <img src="../img/dcfl05.png">
         <p>甜品饮品</p>
       </li>
       <li v-on:click="$router.push('/businessList')">
-        <img src="img/dcfl06.png">
+        <img src="../img/dcfl06.png">
         <p>速食简餐</p>
       </li>
       <li v-on:click="$router.push('/businessList')">
-        <img src="img/dcfl07.png">
+        <img src="../img/dcfl07.png">
         <p>地方小吃</p>
       </li>
       <li v-on:click="$router.push('/businessList')">
-        <img src="img/dcfl08.png">
+        <img src="../img/dcfl08.png">
         <p>米粉面馆</p>
       </li>
       <li v-on:click="$router.push('/businessList')">
-        <img src="img/dcfl09.png">
+        <img src="../img/dcfl09.png">
         <p>包子粥铺</p>
       </li>
       <li v-on:click="$router.push('/businessList')">
-        <img src="img/dcfl10.png">
+        <img src="../img/dcfl10.png">
         <p>炸鸡炸串</p>
       </li>
     </ul>
@@ -89,11 +89,11 @@
 
     <!-- 推荐商家列表部分 -->
     <ul class="business">
-      <li>
-        <img src="img/sj01.png">
-        <div class="business-info">
+      <li v-for="(item, index) in this.businessList" :key="index">
+        <img v-bind:src="item.img"/>
+        <div class="business-info" v-on:click="toBusinessInfo(item)">
           <div class="business-info-h">
-            <h3>万家饺子（软件园E18店）</h3>
+            <h3>{{item.businessName}}</h3>
             <div class="business-info-like">&#8226;</div>
           </div>
           <div class="business-info-star">
@@ -110,11 +110,11 @@
             </div>
           </div>
           <div class="business-info-delivery">
-            <p>&#165;15起送 | &#165;3配送</p>
+            <p>&#165;{{item.starPrice}}起送 | &#165;{{item.deliveryPrice}}配送</p>
             <p>3.22km | 30分钟</p>
           </div>
           <div class="business-info-explain">
-            <div>各种饺子</div>
+            <div>{{item.businessExplain}}</div>
           </div>
           <div class="business-info-promotion">
             <div class="business-info-promotion-left">
@@ -135,186 +135,6 @@
           </div>
         </div>
       </li>
-      <li>
-        <img src="img/sj02.png">
-        <div class="business-info">
-          <div class="business-info-h">
-            <h3>小锅饭豆腐馆（全运店）</h3>
-            <div class="business-info-like">&#8226;</div>
-          </div>
-          <div class="business-info-star">
-            <div class="business-info-star-left">
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <p>4.9 月售345单</p>
-            </div>
-            <div class="business-info-star-right">
-              蜂鸟专送
-            </div>
-          </div>
-          <div class="business-info-delivery">
-            <p>&#165;15起送 | &#165;3配送</p>
-            <p>3.22km | 30分钟</p>
-          </div>
-          <div class="business-info-explain">
-            <div>各种饺子</div>
-          </div>
-          <div class="business-info-promotion">
-            <div class="business-info-promotion-left">
-              <div class="business-info-promotion-left-incon">新</div>
-              <p>饿了么新用户首单立减9元</p>
-            </div>
-            <div class="business-info-promotion-right">
-              <p>2个活动</p>
-              <i class="fa fa-caret-down"></i>
-            </div>
-          </div>
-          <div class="business-info-promotion">
-            <div class="business-info-promotion-left">
-              <div class="business-info-promotion-left-incon">特</div>
-              <p>特价商品5元起</p>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li>
-        <img src="img/sj03.png">
-        <div class="business-info">
-          <div class="business-info-h">
-            <h3>麦当劳麦乐送（全运路店）</h3>
-            <div class="business-info-like">&#8226;</div>
-          </div>
-          <div class="business-info-star">
-            <div class="business-info-star-left">
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <p>4.9 月售345单</p>
-            </div>
-            <div class="business-info-star-right">
-              蜂鸟专送
-            </div>
-          </div>
-          <div class="business-info-delivery">
-            <p>&#165;15起送 | &#165;3配送</p>
-            <p>3.22km | 30分钟</p>
-          </div>
-          <div class="business-info-explain">
-            <div>各种饺子</div>
-          </div>
-          <div class="business-info-promotion">
-            <div class="business-info-promotion-left">
-              <div class="business-info-promotion-left-incon">新</div>
-              <p>饿了么新用户首单立减9元</p>
-            </div>
-            <div class="business-info-promotion-right">
-              <p>2个活动</p>
-              <i class="fa fa-caret-down"></i>
-            </div>
-          </div>
-          <div class="business-info-promotion">
-            <div class="business-info-promotion-left">
-              <div class="business-info-promotion-left-incon">特</div>
-              <p>特价商品5元起</p>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li>
-        <img src="img/sj04.png">
-        <div class="business-info">
-          <div class="business-info-h">
-            <h3>米村拌饭（浑南店）</h3>
-            <div class="business-info-like">&#8226;</div>
-          </div>
-          <div class="business-info-star">
-            <div class="business-info-star-left">
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <p>4.9 月售345单</p>
-            </div>
-            <div class="business-info-star-right">
-              蜂鸟专送
-            </div>
-          </div>
-          <div class="business-info-delivery">
-            <p>&#165;15起送 | &#165;3配送</p>
-            <p>3.22km | 30分钟</p>
-          </div>
-          <div class="business-info-explain">
-            <div>各种饺子</div>
-          </div>
-          <div class="business-info-promotion">
-            <div class="business-info-promotion-left">
-              <div class="business-info-promotion-left-incon">新</div>
-              <p>饿了么新用户首单立减9元</p>
-            </div>
-            <div class="business-info-promotion-right">
-              <p>2个活动</p>
-              <i class="fa fa-caret-down"></i>
-            </div>
-          </div>
-          <div class="business-info-promotion">
-            <div class="business-info-promotion-left">
-              <div class="business-info-promotion-left-incon">特</div>
-              <p>特价商品5元起</p>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li>
-        <img src="img/sj05.png">
-        <div class="business-info">
-          <div class="business-info-h">
-            <h3>申记串道（中海康城店）</h3>
-            <div class="business-info-like">&#8226;</div>
-          </div>
-          <div class="business-info-star">
-            <div class="business-info-star-left">
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <p>4.9 月售345单</p>
-            </div>
-            <div class="business-info-star-right">
-              蜂鸟专送
-            </div>
-          </div>
-          <div class="business-info-delivery">
-            <p>&#165;15起送 | &#165;3配送</p>
-            <p>3.22km | 30分钟</p>
-          </div>
-          <div class="business-info-explain">
-            <div>各种饺子</div>
-          </div>
-          <div class="business-info-promotion">
-            <div class="business-info-promotion-left">
-              <div class="business-info-promotion-left-incon">新</div>
-              <p>饿了么新用户首单立减9元</p>
-            </div>
-            <div class="business-info-promotion-right">
-              <p>2个活动</p>
-              <i class="fa fa-caret-down"></i>
-            </div>
-          </div>
-          <div class="business-info-promotion">
-            <div class="business-info-promotion-left">
-              <div class="business-info-promotion-left-incon">特</div>
-              <p>特价商品5元起</p>
-            </div>
-          </div>
-        </div>
-      </li>
     </ul>
     <!-- 底部菜单部分 -->
     <bottom/>
@@ -323,6 +143,7 @@
 </template>
 
 <script>
+import router from '../router'
 import Bottom from "./bottom";
 export default {
   name: "index",
@@ -332,7 +153,10 @@ export default {
       method: 'post',
     }).then(res=>{
       if (res.data != null) {
-        this.businessList = res.data
+        let businessList = res.data
+        businessList.map(((item, index)=> {
+          this.businessList.push(Object.assign({},item,{img: require('../img/business/b'+index+'.png')}))
+        }))
       }
     })
   },
@@ -340,6 +164,11 @@ export default {
   data: function (){
     return {
       businessList: [],
+    }
+  },
+  methods: {
+    toBusinessInfo: function (business){
+      router.push({name: 'businessInfo', query: {business: business}})
     }
   }
 }
@@ -367,8 +196,8 @@ export default {
   margin: 30% 0 0 29%;
   background-color: #0097FF;
   position: absolute;
-  border-radius: 50%;
-}
+  right: 1vw;
+  border-radius: 50%; }
 .wrapper header{
   width: 100%;
   height: 12vw;

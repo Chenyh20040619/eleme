@@ -16,36 +16,28 @@
       <p>习近平先生 13656785432</p>
     </div>
 
-    <h3>万家饺子（软件园E18店）</h3>
+    <h3>{{this.business.businessName}}</h3>
     <!-- 订单明细部分 -->
     <ul class="order-detailed">
-      <li>
+      <li v-for="(item, index) in this.foodList" :key="index">
         <div class="order-detailed-left">
-          <img src="img/sp01.png">
-          <p>纯肉鲜肉（水饺） x 2</p>
-          3.5.2.css部分
+          <img v-bind:src="item.img">
+          <p>{{item.foodName}} x {{item.count}}</p>
         </div>
-        <p>&#165;15</p>
-      </li>
-      <li>
-        <div class="order-detailed-left">
-          <img src="img/sp02.png">
-          <p>玉米鲜肉（水饺） x 1</p>
-        </div>
-        <p>&#165;16</p>
+        <p>&#165;{{item.foodPrice * item.count}}</p>
       </li>
     </ul>
     <div class="order-deliveryfee">
       <p>配送费</p>
-      <p>&#165;3</p>
+      <p>&#165;{{this.business.deliveryPrice}}</p>
     </div>
 
     <!-- 合计部分 -->
     <div class="total">
       <div class="total-left">
-        &#165;49
+        &#165;{{this.price + this.business.deliveryPrice}}
       </div>
-      <div class="total-right" onclick="location.href='payment.html'">
+      <div class="total-right" v-on:click="toPayment">
         去支付
       </div>
     </div>
@@ -53,8 +45,28 @@
 </template>
 
 <script>
+import router from '../router'
 export default {
-  name: "order"
+  name: "order",
+  data: function (){
+    return {
+      business: {
+        businessId: this.$route.query.business.businessId,
+        businessName: this.$route.query.business.businessName,
+        businessAddress: this.$route.query.business.businessAddress,
+        businessExplain: this.$route.query.business.businessExplain,
+        starPrice: this.$route.query.business.starPrice,
+        deliveryPrice: this.$route.query.business.deliveryPrice,
+      },
+      foodList: this.$route.query.foodList,
+      price: this.$route.query.price,
+    }
+  },
+  methods: {
+    toPayment: function (){
+      router.push({name: 'payment', query: {business: this.business, foodList: this.foodList, price: this.price + this.business.deliveryPrice}})
+    }
+  }
 }
 </script>
 

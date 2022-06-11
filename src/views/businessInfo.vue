@@ -8,143 +8,34 @@
 
     <!-- 商家logo部分 -->
     <div class="business-logo">
-      <img src="img/sj01.png">
+      <img v-bind:src="business.img">
     </div>
 
     <!-- 商家信息部分 -->
     <div class="business-info">
-      <h1>万家饺子（软件园E18店）</h1>
-      <p>&#165;15起送 &#165;3配送</p>
-      <p>各种饺子炒菜</p>
+      <h1>{{business.businessName}}</h1>
+      <p>&#165;{{business.starPrice}}起送 &#165;{{business.deliveryPrice}}配送</p>
+      <p>{{business.businessExplain}}</p>
     </div>
 
     <!-- 食品列表部分 -->
     <ul class="food">
-      <li>
+      <li v-for="(item, index) in this.foodList" :key="index">
         <div class="food-left">
-          <img src="img/sp01.png">
+          <img v-bind:src="item.img">
           <div class="food-left-info">
-            <h3>纯肉鲜肉（水饺）</h3>
-            <p>新鲜猪肉</p>
-            <p>&#165;15</p>
+            <h3>{{item.foodName}}</h3>
+            <p>{{item.foodExplain}}</p>
+            <p>&#165;{{item.foodPrice}}</p>
           </div>
         </div>
         <div class="food-right">
           <div>
-            <i class="fa fa-minus-circle"></i>
+            <i class="fa fa-minus-circle" v-on:click="subtraction(item, index)"></i>
           </div>
-          <p><span>3</span></p>
+          <p><span>{{item.count}}</span></p>
           <div>
-            <i class="fa fa-plus-circle"></i>
-          </div>
-        </div>
-      </li>
-      <li>
-        <div class="food-left">
-          <img src="img/sp02.png">
-          <div class="food-left-info">
-            <h3>玉米鲜肉（水饺）</h3>
-            <p>玉米鲜肉</p>
-            <p>&#165;16</p>
-          </div>
-        </div>
-        <div class="food-right">
-          <div>
-            <i class="fa fa-minus-circle"></i>
-          </div>
-          <p><span>2</span></p>
-          <div>
-            <i class="fa fa-plus-circle"></i>
-          </div>
-        </div>
-      </li>
-      <li>
-        <div class="food-left">
-          <img src="img/sp03.png">
-          <div class="food-left-info">
-            <h3>虾仁三鲜（蒸饺）</h3>
-            <p>虾仁三鲜</p>
-            <p>&#165;22</p>
-          </div>
-        </div>
-        <div class="food-right">
-          <div>
-          </div>
-          <p></p>
-          <div>
-            <i class="fa fa-plus-circle"></i>
-          </div>
-        </div>
-      </li>
-      <li>
-        <div class="food-left">
-          <img src="img/sp04.png">
-          <div class="food-left-info">
-            <h3>素三鲜（蒸饺）</h3>
-            <p>素三鲜</p>
-            <p>&#165;15</p>
-          </div>
-        </div>
-        <div class="food-right">
-          <div>
-          </div>
-          <p></p>
-          <div>
-            <i class="fa fa-plus-circle"></i>
-          </div>
-        </div>
-      </li>
-      <li>
-        <div class="food-left">
-          <img src="img/sp05.png">
-          <div class="food-left-info">
-            <h3>角瓜鸡蛋（蒸饺）</h3>
-            <p>角瓜鸡蛋</p>
-            <p>&#165;16</p>
-          </div>
-        </div>
-        <div class="food-right">
-          <div>
-          </div>
-          <p></p>
-          <div>
-            <i class="fa fa-plus-circle"></i>
-          </div>
-        </div>
-      </li>
-      <li>
-        <div class="food-left">
-          <img src="img/sp06.png">
-          <div class="food-left-info">
-            <h3>小白菜肉（水饺）</h3>
-            <p>小白菜肉</p>
-            <p>&#165;18</p>
-          </div>
-        </div>
-        <div class="food-right">
-          <div>
-          </div>
-          <p></p>
-          <div>
-            <i class="fa fa-plus-circle"></i>
-          </div>
-        </div>
-      </li>
-      <li>
-        <div class="food-left">
-          <img src="img/sp07.png">
-          <div class="food-left-info">
-            <h3>芹菜牛肉（水饺）</h3>
-            <p>芹菜牛肉</p>
-            <p>&#165;18</p>
-          </div>
-        </div>
-        <div class="food-right">
-          <div>
-          </div>
-          <p></p>
-          <div>
-            <i class="fa fa-plus-circle"></i>
+            <i class="fa fa-plus-circle" v-on:click="item.count++"></i>
           </div>
         </div>
       </li>
@@ -158,7 +49,7 @@
           <div class="cart-left-icon-quantity">3</div>
         </div>
         <div class="cart-left-info">
-          <p>&#165;12.88</p>
+          <p>&#165;{{price}}</p>
           <p>另需配送费3元</p>
         </div>
       </div>
@@ -170,7 +61,7 @@
         </div>
         -->
         <!-- 达到起送费 -->
-        <div class="cart-right-item" onclick="location.href='order.html'">
+        <div class="cart-right-item" v-on:click="toOrder">
           去结算
         </div>
       </div>
@@ -180,8 +71,56 @@
 </template>
 
 <script>
+import router from '../router'
 export default {
-  name: "businessInfo"
+  name: "businessInfo",
+  computed: {
+    price: function (){
+      let allPrice = 0
+      for (let i = 0; i < this.foodList.length; i++) {
+        allPrice += this.foodList[i].count * this.foodList[i].foodPrice
+      }
+      return allPrice
+    }
+  },
+  mounted() {
+    this.$axios({
+      url: 'http://localhost:8080/food/getFood',
+      method: 'post',
+      data: {businessId: this.business.businessId}
+    }).then(res=>{
+      if (res.data != null) {
+        let foodList = res.data
+        foodList.map(((item, index)=> {
+          this.foodList.push(Object.assign({},item,{count: 0, img: require('../img/food/'+item.businessId+'/'+index+'.png')}))
+        }))
+      }
+    })
+  },
+  data: function (){
+    return {
+      business: {
+        businessId: this.$route.query.business.businessId,
+        businessName: this.$route.query.business.businessName,
+        businessAddress: this.$route.query.business.businessAddress,
+        businessExplain: this.$route.query.business.businessExplain,
+        starPrice: this.$route.query.business.starPrice,
+        deliveryPrice: this.$route.query.business.deliveryPrice,
+        img: this.$route.query.business.img,
+      },
+      foodList: [],
+    }
+  },
+  methods: {
+    toOrder: function (){
+      router.push({name: 'order', query:{price: this.price, foodList: this.foodList, business: this.business}})
+    },
+    subtraction: function (item, index){
+      if (this.foodList[index].count > 0){
+        this.foodList[index].count--
+      }
+    }
+  }
 }
 </script>
 

@@ -8,98 +8,16 @@
     </header>
 
     <!-- 商家列表部分 -->
-    <ul class="business">
-      <li onclick="location.href='businessInfo.html'">
+    <ul class="business" v-for="(item, index) in this.businessList" :key="index">
+      <li v-on:click="toBusinessInfo(item)">
         <div class="business-img">
-          <img src="img/sj01.png">
-          <div class="business-img-quantity">3</div>
+          <img v-bind:src="item.img"/>
+          <div class="business-img-quantity">0</div>
         </div>
         <div class="business-info">
-          <h3>万家饺子（软件园E18店）</h3>
-          <p>&#165;15起送 | &#165;3配送</p>
-          <p>各种饺子炒菜</p>
-        </div>
-      </li>
-      <li onclick="location.href='businessInfo.html'">
-        <div class="business-img">
-          <img src="img/sj02.png">
-          <div class="business-img-quantity">2</div>
-        </div>
-        <div class="business-info">
-          <h3>小锅饭豆腐馆（全运店）</h3>
-          <p>&#165;15起送 | &#165;3配送</p>
-          <p>特色美食</p>
-        </div>
-      </li>
-      <li onclick="this.router.push()">
-        <div class="business-img">
-          <img src="img/sj03.png">
-          <div class="business-img-quantity">1</div>
-        </div>
-        <div class="business-info">
-          <h3>麦当劳麦乐送（全运路店）</h3>
-          <p>&#165;15起送 | &#165;3配送</p>
-          <p>汉堡薯条</p>
-        </div>
-      </li>
-      <li onclick="location.href='businessInfo.html'">
-        <div class="business-img">
-          <img src="img/sj04.png">
-        </div>
-        <div class="business-info">
-          <h3>米村拌饭（浑南店）</h3>
-          <p>&#165;15起送 | &#165;3配送</p>
-          <p>各种炒菜拌饭</p>
-        </div>
-      </li>
-      <li onclick="location.href='businessInfo.html'">
-        <div class="business-img">
-          <img src="img/sj05.png">
-        </div>
-        <div class="business-info">
-          <h3>申记串道（中海康城店）</h3>
-          <p>&#165;15起送 | &#165;3配送</p>
-          <p>烤串炸串</p>
-        </div>
-      </li>
-      <li onclick="location.href='businessInfo.html'">
-        <div class="business-img">
-          <img src="img/sj06.png">
-        </div>
-        <div class="business-info">
-          <h3>半亩良田排骨米饭</h3>
-          <p>&#165;15起送 | &#165;3配送</p>
-          <p>排骨米饭套餐</p>
-        </div>
-      </li>
-      <li onclick="location.href='businessInfo.html'">
-        <div class="business-img">
-          <img src="img/sj07.png">
-        </div>
-        <div class="business-info">
-          <h3>茶兮鲜果饮品（国际软件园店）</h3>
-          <p>&#165;15起送 | &#165;3配送</p>
-          <p>甜品饮品</p>
-        </div>
-      </li>
-      <li onclick="location.href='businessInfo.html'">
-        <div class="business-img">
-          <img src="img/sj08.png">
-        </div>
-        <div class="business-info">
-          <h3>唯一水果捞（软件园E18店）</h3>
-          <p>&#165;15起送 | &#165;3配送</p>
-          <p>新鲜水果</p>
-        </div>
-      </li>
-      <li onclick="location.href='businessInfo.html'">
-        <div class="business-img">
-          <img src="img/sj09.png">
-        </div>
-        <div class="business-info">
-          <h3>满园春饼（全运路店）</h3>
-          <p>&#165;15起送 | &#165;3配送</p>
-          <p>各种春饼</p>
+          <h3>{{item.businessName}}</h3>
+          <p>&#165;{{item.starPrice}}起送 | &#165;{{item.deliveryPrice}}配送</p>
+          <p>{{item.businessExplain}}</p>
         </div>
       </li>
     </ul>
@@ -128,8 +46,33 @@
 </template>
 
 <script>
+import router from "../router";
+
 export default {
-  name: "businessList"
+  name: "businessList",
+  mounted() {
+    this.$axios({
+      url: 'http://localhost:8080/business/listBusinessAll',
+      method: 'post',
+    }).then(res=>{
+      if (res.data != null) {
+        let businessList = res.data
+        businessList.map(((item, index)=> {
+          this.businessList.push(Object.assign({},item,{img: require('../img/business/b'+index+'.png')}))
+        }))
+      }
+    })
+  },
+  data: function (){
+    return {
+      businessList: []
+    }
+  },
+  methods: {
+    toBusinessInfo: function (business){
+      router.push({name: 'businessInfo', query: {business: business}})
+    }
+  }
 }
 </script>
 

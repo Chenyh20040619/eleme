@@ -12,49 +12,21 @@
       <li>
         <div class="order-info">
           <p>
-            万家饺子（软件园E18店）
+            {{this.business.businessName}}
             <i class="fa fa-caret-down"></i>
           </p>
           <div class="order-info-right">
-            <p>&#165;49</p>
+            <p>&#165;{{this.price}}</p>
             <div class="order-info-right-icon">去支付</div>
           </div>
         </div>
         <ul class="order-detailet">
-          <li>
-            <p>纯肉鲜肉（水饺） x 2</p>
-            <p>&#165;15</p>
-          </li>
-          <li>
-            <p>玉米鲜肉（水饺） x 1</p>
-            <p>&#165;16</p>
-          </li>
-          <li>
-            <p>配送费</p>
-            <p>&#165;3</p>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <div class="order-info">
-          <p>
-            小锅饭豆腐馆（全运店）
-            <i class="fa fa-caret-down"></i>
-          </p>
-          <div class="order-info-right">
-            <p>&#165;55</p>
-            <div class="order-info-right-icon">去支付</div>
+          <div  v-for="(item, index) in this.foodList" :key="index">
+            <li>
+              <p>{{item.foodName}}</p>
+              <p>&#165;{{item.foodPrice * item.count}}</p>
+            </li>
           </div>
-        </div>
-        <ul class="order-detailet">
-          <li>
-            <p>纯肉鲜肉（水饺） x 2</p>
-            <p>&#165;15</p>
-          </li>
-          <li>
-            <p>玉米鲜肉（水饺） x 1</p>
-            <p>&#165;16</p>
-          </li>
           <li>
             <p>配送费</p>
             <p>&#165;3</p>
@@ -119,31 +91,29 @@
     </ul>
 
     <!-- 底部菜单部分 -->
-    <ul class="footer">
-      <li onclick="location.href='index.html'">
-        <i class="fa fa-home"></i>
-        <p>首页</p>
-      </li>
-      <li>
-        <i class="fa fa-compass"></i>
-        <p>发现</p>
-      </li>
-      <li onclick="location.href='orderList.html'">
-        <i class="fa fa-file-text-o"></i>
-        <p>订单</p>
-      </li>
-      <li>
-        <i class="fa fa-user-o"></i>
-        <p>我的</p>
-      </li>
-    </ul>
-
+    <bottom/>
   </div>
 </template>
 
 <script>
+import Bottom from "./bottom";
 export default {
-  name: "payment"
+  name: "payment",
+  components: {Bottom},
+  data: function (){
+    return {
+      business: {
+        businessId: this.$route.query.business.businessId,
+        businessName: this.$route.query.business.businessName,
+        businessAddress: this.$route.query.business.businessAddress,
+        businessExplain: this.$route.query.business.businessExplain,
+        starPrice: this.$route.query.business.starPrice,
+        deliveryPrice: this.$route.query.business.deliveryPrice,
+      },
+      foodList: this.$route.query.foodList,
+      price: this.$route.query.price,
+    }
+  },
 }
 </script>
 

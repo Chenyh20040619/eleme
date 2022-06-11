@@ -8,7 +8,7 @@
       <i class="fa fa-compass"></i>
       <p>发现</p>
     </li>
-    <li v-on:click="$router.push('/order')">
+    <li v-on:click="$router.push('/login')">
       <i class="fa fa-file-text-o"></i>
       <p>订单</p>
     </li>
